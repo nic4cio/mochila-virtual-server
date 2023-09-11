@@ -40,3 +40,15 @@ model Bookmark {
 
   @@map("bookmarks")
 }
+
+model Conteudo {
+  id Int @id @default(autoincrement())
+
+  titulo String
+  materia String
+  assunto String
+  descricao String?
+  pdf String
+
+  @@map("conteudos")
+}
