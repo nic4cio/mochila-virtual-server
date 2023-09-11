@@ -6,13 +6,8 @@ import { ConteudosDto } from './dto';
 export class ConteudosService {
   constructor(private prisma: PrismaService) {}
 
-  async getContent(dto: ConteudosDto) {
-    const response = await this.prisma.conteudo.findMany({
-      where: {
-        materia: dto.materia,
-      },
-    });
-
+  async getContent() {
+    const response = await this.prisma.conteudo.findMany();
     return response;
   }
 
