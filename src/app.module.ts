@@ -5,6 +5,9 @@ import { UserModule } from './user/user.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConteudosModule } from './conteudos/conteudos.module';
+import { ComentariosController } from './comentarios/comentarios.controller';
+import { ComentariosModule } from './comentarios/comentarios.module';
+import { ComentariosService } from './comentarios/comentarios.service';
 
 @Module({
   imports: [
@@ -16,6 +19,7 @@ import { ConteudosModule } from './conteudos/conteudos.module';
     BookmarkModule,
     PrismaModule,
     ConteudosModule,
+    ComentariosModule,
   ],
 })
 export class AppModule {}

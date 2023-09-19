@@ -22,6 +22,7 @@ model User {
   lastName  String? 
 
   bookmarks Bookmark[]
+  comentarios Comentario[]
 
   @@map("users")
 }
@@ -51,4 +52,17 @@ model Conteudo {
   pdf String
 
   @@map("conteudos")
+}
+
+model Comentario {
+  id Int @id @default(autoincrement())
+
+  texto String
+  upvote Int
+  downvote Int
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("comentarios")
 }
