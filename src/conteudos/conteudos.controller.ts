@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ConteudosService } from './conteudos.service';
 import { ConteudosDto } from './dto';
+import { GetUser } from 'src/auth/decorator';
 
 @Controller('conteudos')
 export class ConteudosController {
@@ -12,7 +13,7 @@ export class ConteudosController {
   }
 
   @Post()
-  createContent(@Body() dto: ConteudosDto) {
-    return this.conteudosService.createContent(dto);
+  createContent(@GetUser('id') userId: number, @Body() dto: ConteudosDto) {
+    return this.conteudosService.createContent(userId, dto);
   }
 }

@@ -11,9 +11,10 @@ export class ConteudosService {
     return response;
   }
 
-  async createContent(dto: ConteudosDto) {
+  async createContent(userId: number, dto: ConteudosDto) {
     const content = await this.prisma.conteudo.create({
       data: {
+        userId,
         ...dto,
       },
     });

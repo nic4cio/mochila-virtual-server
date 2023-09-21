@@ -6,10 +6,10 @@ export class ComentariosDto {
   texto: string;
 
   @IsNumber()
-  @IsNotEmpty()
-  upvote: number;
+  @IsOptional()
+  upvote?: number;
 
   @IsNumber()
-  @IsNotEmpty()
-  downvote: number;
+  @IsOptional()
+  downvote?: number;
 }
