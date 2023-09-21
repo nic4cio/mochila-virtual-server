@@ -21,7 +21,10 @@ model User {
   firstName String?
   lastName  String? 
 
+  role UserRole @default(USER)
+
   bookmarks Bookmark[]
+  conteudos Conteudo[]
   comentarios Comentario[]
 
   @@map("users")
@@ -51,6 +54,11 @@ model Conteudo {
   descricao String?
   pdf String
 
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  comentarios Comentario[]
+
   @@map("conteudos")
 }
 
@@ -64,5 +72,13 @@ model Comentario {
   userId Int
   user User @relation(fields: [userId], references: [id])
 
+  conteudoId Int 
+  conteudo Conteudo @relation(fields: [conteudoId], references: [id])
+
   @@map("comentarios")
+}
+
+enum UserRole {
+  USER
+  CURADOR
 }

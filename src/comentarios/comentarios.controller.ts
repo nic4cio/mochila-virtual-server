@@ -17,6 +17,11 @@ import { JwtGuard } from 'src/auth/guard';
 export class ComentariosController {
   constructor(private comentariosService: ComentariosService) {}
 
+  @Get()
+  getComments(@GetUser('id') userId: number) {
+    return this.comentariosService.getComments(userId);
+  }
+
   @Get(':id')
   getCommentById(
     @GetUser('id') userId: number,
