@@ -8,8 +8,8 @@ export class ConteudosController {
   constructor(private conteudosService: ConteudosService) {}
 
   @Get()
-  getContent() {
-    return this.conteudosService.getContent();
+  getContent(@Body() dto: ConteudosDto) {
+    return this.conteudosService.getContent(dto);
   }
 
   @Post()
