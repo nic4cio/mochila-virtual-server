@@ -1,19 +1,47 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ConteudosService } from './conteudos.service';
-import { ConteudosDto } from './dto';
 import { GetUser } from 'src/auth/decorator';
+import { JwtGuard } from 'src/auth/guard';
+import { CreateConteudoDto } from './dto';
 
 @Controller('conteudos')
 export class ConteudosController {
   constructor(private conteudosService: ConteudosService) {}
 
   @Get()
-  getContent(@Body() dto: ConteudosDto) {
-    return this.conteudosService.getContent(dto);
+  getAllConteudos() {
+    return this.conteudosService.getAllConteudos();
   }
 
+  @UseGuards(JwtGuard)
+  @Get('myConteudos')
+  getConteudos(@GetUser('id') userId: number) {
+    return this.conteudosService.getConteudos(userId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Get(':id')
+  getConteudoById(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) conteudoId: number,
+  ) {
+    return this.conteudosService.getConteudoById(userId, conteudoId);
+  }
+
+  @UseGuards(JwtGuard)
   @Post()
-  createContent(@GetUser('id') userId: number, @Body() dto: ConteudosDto) {
-    return this.conteudosService.createContent(userId, dto);
+  createConteudo(
+    @GetUser('id') userId: number,
+    @Body() dto: CreateConteudoDto,
+  ) {
+    return this.conteudosService.createConteudo(userId, dto);
   }
 }

@@ -1,1 +1,1 @@
-export * from './conteudos.dto';
+export * from './create-conteudo.dto';

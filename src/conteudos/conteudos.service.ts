@@ -1,29 +1,40 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ConteudosDto } from './dto';
+import { CreateConteudoDto } from './dto';
 
 @Injectable()
 export class ConteudosService {
   constructor(private prisma: PrismaService) {}
 
-  async getContent(dto: ConteudosDto) {
-    const response = await this.prisma.conteudo.findMany({
-      where: {
-        materia: dto.materia,
-      },
-    });
-
-    return response;
+  getAllConteudos() {
+    return this.prisma.conteudo.findMany();
   }
 
-  async createContent(userId: number, dto: ConteudosDto) {
-    const content = await this.prisma.conteudo.create({
+  getConteudos(userId: number) {
+    return this.prisma.conteudo.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  getConteudoById(userId: number, conteudoId: number) {
+    return this.prisma.comentario.findFirst({
+      where: {
+        id: conteudoId,
+        userId,
+      },
+    });
+  }
+
+  async createConteudo(userId: number, dto: CreateConteudoDto) {
+    const conteudo = await this.prisma.conteudo.create({
       data: {
         userId,
         ...dto,
       },
     });
 
-    return content;
+    return conteudo;
   }
 }

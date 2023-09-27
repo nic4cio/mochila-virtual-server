@@ -4,10 +4,9 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
-import { ConteudosModule } from './conteudos/conteudos.module';
-import { ComentariosController } from './comentarios/comentarios.controller';
+
 import { ComentariosModule } from './comentarios/comentarios.module';
-import { ComentariosService } from './comentarios/comentarios.service';
+import { ConteudosModule } from './conteudos/conteudos.module';
 
 @Module({
   imports: [
@@ -18,8 +17,8 @@ import { ComentariosService } from './comentarios/comentarios.service';
     UserModule,
     BookmarkModule,
     PrismaModule,
-    ConteudosModule,
     ComentariosModule,
+    ConteudosModule,
   ],
 })
 export class AppModule {}

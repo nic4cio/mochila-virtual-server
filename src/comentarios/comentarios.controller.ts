@@ -29,11 +29,4 @@ export class ComentariosController {
   ) {
     return this.comentariosService.getCommentById(userId, commentId);
   }
-
-  /*
-  @Post()
-  createComment(@GetUser('id') userId: number, @Body() dto: ComentariosDto) {
-    return this.comentariosService.createComment(userId, dto);
-  }
-  */
 }
