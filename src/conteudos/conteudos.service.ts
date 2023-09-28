@@ -37,4 +37,29 @@ export class ConteudosService {
 
     return conteudo;
   }
+
+  async updateConteudo(userId: number, conteudoId: number, newStatus: string) {
+    const conteudo = await this.prisma.conteudo.findFirst({
+      where: {
+        id: conteudoId,
+        userId,
+      },
+    });
+
+    if (!conteudo) {
+      throw new Error('Erro');
+    }
+
+    // Atualize a coluna status do conteúdo
+    const updatedConteudo = await this.prisma.conteudo.update({
+      where: {
+        id: conteudoId,
+      },
+      data: {
+        status: newStatus,
+      },
+    });
+
+    return updatedConteudo;
+  }
 }

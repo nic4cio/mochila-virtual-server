@@ -6,6 +6,7 @@ import {
   ParseIntPipe,
   Post,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { ConteudosService } from './conteudos.service';
 import { GetUser } from 'src/auth/decorator';
@@ -44,4 +45,15 @@ export class ConteudosController {
   ) {
     return this.conteudosService.createConteudo(userId, dto);
   }
+
+  @UseGuards(JwtGuard)
+  @Patch(':id') // Use o decorator Patch e especifique o parâmetro ':id'
+  updateConteudo(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) conteudoId: number,
+    @Body('status') newStatus: string, // Use 'Partial' para permitir atualizações parciais
+  ) {
+    return this.conteudosService.updateConteudo(userId, conteudoId, newStatus);
+  }
+
 }
