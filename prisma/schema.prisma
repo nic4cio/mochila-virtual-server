@@ -59,6 +59,8 @@ model Conteudo {
 
   comentarios Comentario[]
 
+  status String @default("AGUARDANDO_APROVACAO")
+
   @@map("conteudos")
 }
 

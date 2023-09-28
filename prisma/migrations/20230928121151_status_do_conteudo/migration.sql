@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "conteudos" ADD COLUMN     "status" TEXT NOT NULL DEFAULT 'AGUARDANDO_APROVACAO';
