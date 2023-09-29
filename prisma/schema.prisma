@@ -19,7 +19,9 @@ model User {
   hash  String 
 
   firstName String?
-  lastName  String? 
+  lastName  String?
+
+  curso String 
 
   role UserRole @default(USER)
 

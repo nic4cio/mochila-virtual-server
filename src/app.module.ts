@@ -5,8 +5,8 @@ import { UserModule } from './user/user.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
 
-import { ComentariosModule } from './comentarios/comentarios.module';
 import { ConteudosModule } from './conteudos/conteudos.module';
+import { ComentariosModule } from './comentarios/comentarios.module';
 
 @Module({
   imports: [
@@ -17,8 +17,8 @@ import { ConteudosModule } from './conteudos/conteudos.module';
     UserModule,
     BookmarkModule,
     PrismaModule,
-    ComentariosModule,
     ConteudosModule,
+    ComentariosModule,
   ],
 })
 export class AppModule {}
