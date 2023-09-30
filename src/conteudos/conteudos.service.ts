@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateConteudoDto } from './dto';
+import { CreateConteudoDto, EditConteudoDto } from './dto';
 
 @Injectable()
 export class ConteudosService {
@@ -38,11 +38,14 @@ export class ConteudosService {
     return conteudo;
   }
 
-  async updateConteudo(userId: number, conteudoId: number, newStatus: string) {
-    const conteudo = await this.prisma.conteudo.findFirst({
+  async updateConteudo(
+    userId: number,
+    conteudoId: number,
+    dto: EditConteudoDto,
+  ) {
+    const conteudo = await this.prisma.conteudo.findUnique({
       where: {
         id: conteudoId,
-        userId,
       },
     });
 
@@ -51,15 +54,13 @@ export class ConteudosService {
     }
 
     // Atualize a coluna status do conteúdo
-    const updatedConteudo = await this.prisma.conteudo.update({
+    return this.prisma.conteudo.update({
       where: {
         id: conteudoId,
       },
       data: {
-        status: newStatus,
+        status: 'APROVADO',
       },
     });
-
-    return updatedConteudo;
   }
 }
