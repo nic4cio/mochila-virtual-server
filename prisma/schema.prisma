@@ -70,8 +70,8 @@ model Comentario {
   id Int @id @default(autoincrement())
 
   texto String
-  upvote Int
-  downvote Int
+  upvote Int?
+  downvote Int?
 
   userId Int
   user User @relation(fields: [userId], references: [id])

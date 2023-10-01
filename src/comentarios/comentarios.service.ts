@@ -22,4 +22,16 @@ export class ComentariosService {
       },
     });
   }
+
+  async createComment(userId: number, conteudoId: number, dto: ComentariosDto) {
+    const comentario = await this.prisma.comentario.create({
+      data: {
+        userId,
+        conteudoId,
+        ...dto,
+      },
+    });
+
+    return comentario;
+  }
 }

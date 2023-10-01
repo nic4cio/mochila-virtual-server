@@ -12,7 +12,6 @@ import { GetUser } from 'src/auth/decorator';
 import { ComentariosDto } from './dto';
 import { JwtGuard } from 'src/auth/guard';
 
-@UseGuards(JwtGuard)
 @Controller('comentarios')
 export class ComentariosController {
   constructor(private comentariosService: ComentariosService) {}
@@ -28,5 +27,15 @@ export class ComentariosController {
     @Param('id', ParseIntPipe) commentId: number,
   ) {
     return this.comentariosService.getCommentById(userId, commentId);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post(':conteudoId')
+  createComment(
+    @GetUser('id') userId: number,
+    @Param('conteudoId', ParseIntPipe) conteudoId: number,
+    @Body() dto: ComentariosDto,
+  ) {
+    return this.comentariosService.createComment(userId, conteudoId, dto);
   }
 }
