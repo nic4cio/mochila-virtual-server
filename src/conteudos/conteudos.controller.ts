@@ -11,7 +11,7 @@ import {
 import { ConteudosService } from './conteudos.service';
 import { GetUser } from 'src/auth/decorator';
 import { JwtGuard } from 'src/auth/guard';
-import { CreateConteudoDto } from './dto';
+import { CreateConteudoDto, EditConteudoDto } from './dto';
 
 @Controller('conteudos')
 export class ConteudosController {
@@ -51,9 +51,9 @@ export class ConteudosController {
   updateConteudo(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) conteudoId: number,
-    @Body('status') newStatus: string, // Use 'Partial' para permitir atualizações parciais
+    @Body('') dto: EditConteudoDto, // Use 'Partial' para permitir atualizações parciais
   ) {
-    return this.conteudosService.updateConteudo(userId, conteudoId, newStatus);
+    return this.conteudosService.updateConteudo(userId, conteudoId, dto);
   }
 
 }
