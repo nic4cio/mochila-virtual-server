@@ -11,7 +11,7 @@ export class UserController {
   constructor(private userService: UserService) {}
   @Get('me')
   getMe(@GetUser() user: User) {
-    console.log(user);
+    // console.log(user);
     return user;
   }
 
