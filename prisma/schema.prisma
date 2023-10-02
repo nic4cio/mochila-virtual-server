@@ -28,6 +28,7 @@ model User {
   bookmarks Bookmark[]
   conteudos Conteudo[]
   comentarios Comentario[]
+  contentRatings ContentRating[]
 
   @@map("users")
 }
@@ -60,6 +61,7 @@ model Conteudo {
   user User @relation(fields: [userId], references: [id])
 
   comentarios Comentario[]
+  ratings ContentRating[]
 
   status String @default("AGUARDANDO_APROVACAO")
 
@@ -82,7 +84,25 @@ model Comentario {
   @@map("comentarios")
 }
 
+model ContentRating {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  conteudoId Int
+  voteType  EnumVoteType
+  createdAt DateTime @default(now())
+
+  User      User     @relation(fields: [userId], references: [id])
+  Conteudo   Conteudo  @relation(fields: [conteudoId], references: [id])
+
+  @@unique([userId, conteudoId])
+}
+
 enum UserRole {
   USER
   CURADOR
+}
+
+enum EnumVoteType {
+  UPVOTE
+  DOWNVOTE
 }

@@ -63,4 +63,30 @@ export class ConteudosService {
       },
     });
   }
+
+  async recusarConteudo(
+    userId: number,
+    conteudoId: number,
+    dto: EditConteudoDto,
+  ) {
+    const conteudo = await this.prisma.conteudo.findUnique({
+      where: {
+        id: conteudoId,
+      },
+    });
+
+    if (!conteudo) {
+      throw new Error('Erro');
+    }
+
+    // Atualize a coluna status do conteúdo
+    return this.prisma.conteudo.update({
+      where: {
+        id: conteudoId,
+      },
+      data: {
+        status: 'RECUSADO',
+      },
+    });
+  }
 }

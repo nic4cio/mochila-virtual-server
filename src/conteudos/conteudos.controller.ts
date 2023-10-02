@@ -56,4 +56,13 @@ export class ConteudosController {
     return this.conteudosService.updateConteudo(userId, conteudoId, dto);
   }
 
+  @UseGuards(JwtGuard)
+  @Patch('/recusar/:id') // Use o decorator Patch e especifique o parâmetro ':id'
+  recusarConteudo(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) conteudoId: number,
+    @Body('') dto: EditConteudoDto, // Use 'Partial' para permitir atualizações parciais
+  ) {
+    return this.conteudosService.recusarConteudo(userId, conteudoId, dto);
+  }
 }

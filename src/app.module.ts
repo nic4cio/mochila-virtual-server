@@ -7,6 +7,7 @@ import { PrismaModule } from './prisma/prisma.module';
 
 import { ConteudosModule } from './conteudos/conteudos.module';
 import { ComentariosModule } from './comentarios/comentarios.module';
+import { ContentRatingModule } from './content-rating/content-rating.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ComentariosModule } from './comentarios/comentarios.module';
     PrismaModule,
     ConteudosModule,
     ComentariosModule,
+    ContentRatingModule,
   ],
 })
 export class AppModule {}
