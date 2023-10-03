@@ -38,4 +38,12 @@ export class ComentariosController {
   ) {
     return this.comentariosService.createComment(userId, conteudoId, dto);
   }
+
+  //Get all comentarios associated with a conteudoId
+  @Get('conteudo/:conteudoId')
+  getCommentsByConteudoId(
+    @Param('conteudoId', ParseIntPipe) conteudoId: number,
+  ) {
+    return this.comentariosService.getCommentsByConteudoId(conteudoId);
+  }
 }

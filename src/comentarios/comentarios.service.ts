@@ -34,4 +34,13 @@ export class ComentariosService {
 
     return comentario;
   }
+
+  //Get all comentarios associated with a conteudoId
+  getCommentsByConteudoId(conteudoId: number) {
+    return this.prisma.comentario.findMany({
+      where: {
+        conteudoId,
+      },
+    });
+  }
 }
