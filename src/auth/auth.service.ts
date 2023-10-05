@@ -25,6 +25,8 @@ export class AuthService {
           firstName: dto.firstName,
           hash,
           curso: dto.curso,
+          historico: '',
+          motivoCurador: '',
         },
       });
 
