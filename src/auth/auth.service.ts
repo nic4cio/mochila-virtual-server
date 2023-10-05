@@ -18,6 +18,21 @@ export class AuthService {
     // generate the password hash
     const hash = await argon.hash(dto.password);
     // save the new user in the db
+    const user2 = await this.prisma.user.findUnique({
+      where: {
+        email: dto.email,
+      },
+    });
+
+    if (user2) throw new ForbiddenException('Email Já Cadastrado');
+
+    const user3 = await this.prisma.user.findFirst({
+      where: {
+        firstName: dto.firstName,
+      },
+    });
+
+    if (user3) throw new ForbiddenException('Nome Já Existe');
     try {
       const user = await this.prisma.user.create({
         data: {
@@ -25,6 +40,8 @@ export class AuthService {
           firstName: dto.firstName,
           hash,
           curso: dto.curso,
+          historico: '',
+          motivoCurador: '',
         },
       });
 
@@ -32,7 +49,7 @@ export class AuthService {
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
-          throw new ForbiddenException('Credentials taken');
+          throw new ForbiddenException('Erro');
         }
       }
       throw error;
@@ -47,12 +64,12 @@ export class AuthService {
       },
     });
     // if user does not exist throw exception
-    if (!user) throw new ForbiddenException('Credentials incorrect');
+    if (!user) throw new ForbiddenException('Email Não Cadastrado');
 
     // compare password
     const pwMatches = await argon.verify(user.hash, dto.password);
     // if password incorrect throw exception
-    if (!pwMatches) throw new ForbiddenException('Credentials incorrect');
+    if (!pwMatches) throw new ForbiddenException('Senha Inválida');
     return this.signToken(user.id, user.email);
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { CuradorUserDto, EditUserDto } from './dto';
+import { CuradorUserDto, EditUserDto, SerCuradorUserDto } from './dto';
 
 @Injectable()
 export class UserService {
@@ -17,7 +17,15 @@ export class UserService {
     return user;
   }
 
-  async curadorUser(userId: number, dto: CuradorUserDto) {
+  getAllUsers() {
+    return this.prisma.user.findMany();
+  }
+
+  async submeterCuradorDto(
+    userId: number,
+    motivoCurador: string,
+    historico: string,
+  ) {
     const user = await this.prisma.user.findUnique({
       where: {
         id: userId,
@@ -34,7 +42,32 @@ export class UserService {
         id: userId,
       },
       data: {
+        role: 'ANALISE',
+        motivoCurador: motivoCurador,
+        historico: historico,
+      },
+    });
+  }
+
+  async serCuradorUser(userId: number, matCurador: string[], userId2: number) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId2,
+      },
+    });
+
+    if (!user) {
+      throw new Error('Erro');
+    }
+
+    // Atualize a coluna status do conteúdo
+    return this.prisma.user.update({
+      where: {
+        id: userId2,
+      },
+      data: {
         role: 'CURADOR',
+        matCurador: matCurador,
       },
     });
   }
