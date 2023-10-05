@@ -1,0 +1,26 @@
+kind: pipeline
+type: kubernetes
+name: standard-pipeline
+
+steps:
+- name: build-image
+  image: plugins/ecr
+  settings:
+    repo: pds-2023-1-03
+    registry: 716814888065.dkr.ecr.us-east-2.amazonaws.com
+    region: us-east-2
+    context: .
+    dockerfile: Dockerfile
+    tags:
+      - backend
+
+tolerations:
+- dedicated: jenkinsAgents
+  operator: Exists
+  effect: NoSchedule
+
+trigger:
+  branch:
+    - main
+  event:
+    - push
