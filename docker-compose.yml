@@ -1,16 +1,36 @@
 version: '3.8'
-services: 
-  dev-db: 
+
+services:
+  dev-db:
     image: postgres:13
-    ports: 
+    ports:
       - 5434:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: curadoria
-    networks: 
+    networks:
       - pds
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 3333:3333
+    depends_on:
+      - dev-db
+    networks:
+      - pds
+
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 5173:5173
+    networks:
+      - pds
+
 networks:
   pds:
-
-  
