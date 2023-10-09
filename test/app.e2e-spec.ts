@@ -8,6 +8,7 @@ import { EditUserDto } from '../src/user/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
+  let prisma: PrismaService;
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -21,11 +22,22 @@ describe('App e2e', () => {
       }),
     );
     await app.init();
+
+    prisma = app.get(PrismaService);
+    await prisma.cleanDb();
   });
 
   afterAll(() => {
     app.close();
   });
 
-  it.todo('should create a user');
+  describe('Auth', () => {
+    describe('Signup', () => {
+      it.todo('should signup a new user');
+    });
+
+    describe('Signin', () => {
+      it.todo('should signin');
+    });
+  });
 });
