@@ -8,9 +8,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ComentariosService } from './comentarios.service';
-import { GetUser } from 'src/auth/decorator';
+import { GetUser } from '../../src/auth/decorator';
 import { ComentariosDto } from './dto';
-import { JwtGuard } from 'src/auth/guard';
+import { JwtGuard } from '../../src/auth/guard';
 
 @Controller('comentarios')
 export class ComentariosController {

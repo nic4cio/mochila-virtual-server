@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ContentRatingService } from './content-rating.service';
-import { JwtGuard } from 'src/auth/guard';
-import { GetUser } from 'src/auth/decorator';
+import { JwtGuard } from '../../src/auth/guard';
+import { GetUser } from '../../src/auth/decorator';
 
 @Controller('content-rating')
 export class ContentRatingController {
