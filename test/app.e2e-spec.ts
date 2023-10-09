@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module';
 import { CreateBookmarkDto, EditBookmarkDto } from '../src/bookmark/dto';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { EditUserDto } from '../src/user/dto';
+import { RegisterAuthDto } from 'src/auth/dto';
 
 describe('App e2e', () => {
   let app: INestApplication;
@@ -22,6 +23,7 @@ describe('App e2e', () => {
       }),
     );
     await app.init();
+    await app.listen(3333);
 
     prisma = app.get(PrismaService);
     await prisma.cleanDb();
@@ -33,11 +35,23 @@ describe('App e2e', () => {
 
   describe('Auth', () => {
     describe('Signup', () => {
-      it.todo('should signup a new user');
-    });
+      it('should signup a new user', () => {
+        const dto: RegisterAuthDto = {
+          email: 'teste@email.com',
+          firstName: 'Usuário Teste',
+          password: '123456',
+          curso: 'CC',
+        };
+        return pactum
+          .spec()
+          .post('http://localhost:3333/auth/signup')
+          .withBody(dto)
+          .expectStatus(201);
+      });
 
-    describe('Signin', () => {
-      it.todo('should signin');
+      describe('Signin', () => {
+        it.todo('should signin');
+      });
     });
   });
 });
