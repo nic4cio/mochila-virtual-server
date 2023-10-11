@@ -25,6 +25,12 @@ model User {
 
   role UserRole @default(USER)
 
+  matCurador String[]
+
+  historico String
+
+  motivoCurador String
+
   bookmarks Bookmark[]
   conteudos Conteudo[]
   comentarios Comentario[]
@@ -99,6 +105,7 @@ model ContentRating {
 
 enum UserRole {
   USER
+  ANALISE
   CURADOR
 }
 
