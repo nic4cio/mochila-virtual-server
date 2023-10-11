@@ -9,8 +9,8 @@ import {
   Patch,
 } from '@nestjs/common';
 import { ConteudosService } from './conteudos.service';
-import { GetUser } from '../../src/auth/decorator';
-import { JwtGuard } from '../../src/auth/guard';
+import { GetUser } from 'src/auth/decorator';
+import { JwtGuard } from 'src/auth/guard';
 import { CreateConteudoDto, EditConteudoDto } from './dto';
 
 @Controller('conteudos')
