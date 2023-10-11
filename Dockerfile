@@ -1,18 +1,19 @@
-FROM node:16
+FROM node:16-alpine
 
 WORKDIR /curadoria-server
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
 RUN yarn install
 
 COPY . .
 
 RUN npx prisma generate
-RUN rm -rf ./node_modules
-RUN yarn install --production
 
+RUN yarn build
+
+RUN yarn install --production && yarn cache clean
 
 EXPOSE 3333
 
-CMD ["yarn", "start:prod"]
+CMD ["node", "dist/main.js"]
