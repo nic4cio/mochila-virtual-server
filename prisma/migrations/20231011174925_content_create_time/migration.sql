@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "conteudos" ADD COLUMN     "createdAt" DATE NOT NULL DEFAULT CURRENT_TIMESTAMP;

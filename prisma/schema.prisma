@@ -62,6 +62,7 @@ model Conteudo {
   assunto String
   descricao String?
   pdf String
+  createdAt DateTime @default(now()) @db.Date
 
   userId Int
   user User @relation(fields: [userId], references: [id])
