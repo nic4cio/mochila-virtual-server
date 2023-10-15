@@ -48,4 +48,10 @@ export class UserController {
       dto.historico,
     );
   }
+
+  @UseGuards(JwtGuard)
+  @Patch('edit/:id')
+  editUser(@GetUser('id') userId: number, @Body() dto: EditUserDto) {
+    return this.userService.editUser(userId, dto);
+  }
 }

@@ -1,20 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CuradorUserDto, EditUserDto, SerCuradorUserDto } from './dto';
+import * as argon from 'argon2';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
   async editUser(userId: number, dto: EditUserDto) {
-    const user = await this.prisma.user.update({
-      where: { id: userId },
-      data: { ...dto },
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
     });
 
-    delete user.hash;
-
-    return user;
+    if (dto.firstName != null && dto.password == null) {
+      return await this.prisma.user.update({
+        where: { id: userId },
+        data: { firstName: dto.firstName },
+      });
+    } else if (dto.firstName == null && dto.password != null) {
+      delete user.hash;
+      const hash = await argon.hash(dto.password);
+      return await this.prisma.user.update({
+        where: { id: userId },
+        data: { hash },
+      });
+    } else if (dto.firstName != null && dto.password != null) {
+      delete user.hash;
+      const hash = await argon.hash(dto.password);
+      return await this.prisma.user.update({
+        where: { id: userId },
+        data: { firstName: dto.firstName, hash },
+      });
+    } else {
+      return user;
+    }
   }
 
   getAllUsers() {
