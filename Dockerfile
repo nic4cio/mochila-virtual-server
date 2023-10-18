@@ -12,8 +12,6 @@ COPY . .
 
 RUN npx prisma generate
 
-RUN npx prisma deploy --preview-feature
-
 RUN yarn build
 
 RUN yarn install --production 
