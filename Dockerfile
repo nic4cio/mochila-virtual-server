@@ -1,24 +1,24 @@
-FROM node:16-alpine
+FROM node:16 AS builder
 
-WORKDIR /curadoria-server
+WORKDIR /app
 
-COPY package.json yarn.lock ./
+COPY package*.json ./
+COPY prisma ./prisma/
+
 
 RUN yarn install
 
-COPY prisma ./prisma/
-
 COPY . .
-
-RUN npx prisma generate
-
-RUN npx prisma migrate deploy 
 
 RUN yarn build
 
-RUN yarn install --production 
-RUN yarn cache clean
+FROM node:16
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3333
-
-CMD ["node", "dist/main.js"]
+# 👇 new migrate and start app script
+CMD [  "npm", "run", "start:prod" ]
