@@ -20,6 +20,8 @@ services:
       - 3333:3333
     depends_on:
       - dev-db
+    env_file:
+      - .env
     networks:
       - pds
 
@@ -29,6 +31,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5173:5173
+    env_file:
+      - .env
     networks:
       - pds
 
